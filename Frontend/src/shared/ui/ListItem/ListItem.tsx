@@ -7,16 +7,21 @@ export enum ListItemType {
 }
 
 interface ListItemProps {
+  tooltip?: string;
 }
 
 export const ListItem: FC<ListItemProps> = (props) => {
   const {
-    children
+    tooltip,
+    children,
   } = props;
 
   return (
-    <div className={classNames('list-item', {}, [])}>
+    <span
+      className={classNames('list-item', {}, [])}
+      data-tooltip={tooltip}
+    >
       {children}
-    </div>
+    </span>
   );
 };

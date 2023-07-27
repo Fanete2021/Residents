@@ -1,11 +1,10 @@
 import { classNames } from 'shared/lib/classNames/classNames';
 import "./List.scss";
-import {Resident} from "entities/Resident";
 import { ListItem } from 'shared/ui';
-import { ReactNode } from 'react';
 
 export interface ItemData {
-  title: string,
+  title?: string,
+  tooltip?: string,
   items?: ItemData[]
 }
 
@@ -14,15 +13,28 @@ interface ListProps {
   items: ItemData[]
 }
 
-const createListItems: ReactNode = (resident: Resident) => {
-  const names = resident.groups.map(gr => gr.name);
+const offsetLevel: number = 20;
 
+const createListItemsRec = (items: ItemData[], level: number): JSX.Element => {
   return (
-    <ListItem>
-      {names}
-    </ListItem>
+    <div
+      style={{marginLeft: `${level * offsetLevel}px`}}
+    >
+      {items.map(item => (
+        <div>
+          <ListItem
+            key={item.title}
+            tooltip={item.tooltip}
+          >
+            {item.title}
+          </ListItem>
+
+          {item.items && createListItemsRec(item.items, level + 1)}
+        </div>
+      ))}
+    </div>
   )
-}
+};
 
 export const List = (props: ListProps) => {
   const {
@@ -32,13 +44,7 @@ export const List = (props: ListProps) => {
 
   return (
     <div className={classNames('list', {}, [className])}>
-      {data.map((d) => (
-        <ListItem
-          key={d.name}
-        >
-          {d.name}
-        </ListItem>
-      ))}
+      {createListItemsRec(items, 0)}
     </div>
   );
 };

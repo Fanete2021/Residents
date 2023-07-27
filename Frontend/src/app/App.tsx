@@ -1,18 +1,16 @@
-import React, {Suspense} from 'react';
-import {Link, Route, Routes} from 'react-router-dom';
+import React from 'react';
 import './styles/index.scss';
-import {MainPage} from "pages/MainPage";
+import {AppRouter} from "app/providers/router";
+import { Navbar } from 'widgets/Navbar';
 
 const App = () => {
   return (
     <div className={'app'}>
-      <Link to={'/'}>Главная</Link>
+      <Navbar />
 
-      <Suspense fallback={<div>Loading...</div>}>
-        <Routes>
-          <Route path={'/'} element={<MainPage />}/>
-        </Routes>
-      </Suspense>
+      <div className={'app__content'} >
+        <AppRouter />
+      </div>
     </div>
   );
 };

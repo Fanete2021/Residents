@@ -3,5 +3,11 @@
 
 .app {
   font: var(--font-m);
+  background: black;
+  color: white;
   min-height: 100vh;
+
+  .app__content {
+    margin-top: 30px;
+  }
 }

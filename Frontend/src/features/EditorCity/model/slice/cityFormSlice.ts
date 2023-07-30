@@ -18,6 +18,7 @@ export const cityFormSlice = createSlice({
   reducers: {
     setCity: (state, action: PayloadAction<City>) => {
       state.city = action.payload;
+      state.error = '';
     },
     setName: (state, action: PayloadAction<string>) => {
       state.city.name = action.payload;

@@ -11,7 +11,7 @@ const checkCityAndGroup = async (cityId, groups) => {
     return group.name.toLowerCase().startsWith(city.name.toLowerCase());
   });
   if (!group) {
-    return `Город, переданный с city_id не совпадает с городом в группе`;
+    return `Переданный город не совпадает с городом в группе`;
   }
 }
 

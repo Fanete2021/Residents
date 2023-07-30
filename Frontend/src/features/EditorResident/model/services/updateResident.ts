@@ -22,7 +22,10 @@ export const updateResident = createAsyncThunk<void, Resident, { rejectValue: st
       return response.data;
     } catch (error) {
       if (error.response) {
-        return thunkAPI.rejectWithValue(` ${JSON.stringify(error.response.data)}`);
+        const { data } = error.response;
+        const message = data[0]?.msg || data?.message;
+
+        return thunkAPI.rejectWithValue(`${message}`);
       }
 
       return thunkAPI.rejectWithValue(`error`);

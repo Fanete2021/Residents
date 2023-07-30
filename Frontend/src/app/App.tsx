@@ -16,7 +16,7 @@ const App = () => {
 
   return (
     <div className={'app'}>
-      <Navbar />
+      {/* <Navbar /> */}
 
       <div className={'app__content'} >
         <AppRouter />

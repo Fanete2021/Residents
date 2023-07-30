@@ -20,6 +20,7 @@ export const residentFormSlice = createSlice({
   reducers: {
     setResident: (state, action: PayloadAction<Resident>) => {
       state.resident = action.payload;
+      state.error = '';
     },
     setName: (state, action: PayloadAction<string>) => {
       state.resident.name = action.payload;

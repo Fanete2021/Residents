@@ -1,10 +1,6 @@
-import mongoose from 'mongoose';
 import fs from 'fs';
-import CityModel from '../src/models/City.js';
-import ResidentModel from '../src/models/Resident.js';
-import dotenv from 'dotenv';
-
-dotenv.config();
+import ResidentModel from '../../models/Resident.js';
+import CityModel from '../../models/City.js';
 
 const importCities = async (cities) => {
   try {
@@ -34,24 +30,27 @@ const importResidents = async (residents) => {
   }
 }
 
-mongoose.connect(process.env.MONGODB_URI, {
-    dbName: process.env.DB_NAME
-  })
-  .then(() =>{
+export const load = async (req, res) => {
+  try {
     const cities = JSON.parse(fs.readFileSync('data/cities.json', 'utf-8'));
     const residents = JSON.parse(fs.readFileSync('data/residents.json', 'utf-8'));
 
     Promise.all([importCities(cities), importResidents(residents)])
       .then(() => {
         console.log('Загрузка данных завершена.');
-        mongoose.disconnect();
       })
       .catch((err) => {
         console.log('Ошибка при загрузке данных:', err);
-        mongoose.disconnect();
       });
-  })
-  .catch((err) => {
-    console.log('db error', err);
-  });
 
+    res.json({
+      success: true
+    });
+  } catch(err) {
+    console.log(err);
+
+    res.status(500).json({
+      message: 'Не удалось загрузить в базу данных'
+    });
+  }
+};

@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  # MongoDB service
+  mongo_db:
+    container_name: db_container
+    image: mongo:latest
+    restart: always
+    volumes:
+      - mongo_db:/data/db
+
+  # Node API service
+  api:
+    build: ./Backend
+    ports: 
+      - 3030:3030
+    environment:
+      PORT: 3030
+      MONGODB_URI: mongodb://mongo_db:27017
+      DB_NAME: Residents
+    depends_on:
+      - mongo_db
+
+  # React service
+  front:
+    container_name: front
+    build: ./Frontend
+    restart: always
+    ports:
+      - "3000:3000"
+
+volumes:
+  mongo_db: {}

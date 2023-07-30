@@ -4,6 +4,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import CityRouter from './routes/CityRouter.js';
 import ResidentRouter from './routes/ResidentRouter.js';
+import {LoadController} from './controllers/index.js';
 
 dotenv.config();
 
@@ -26,5 +27,7 @@ app.use(cors());
 
 app.use('/cities', CityRouter);
 app.use('/residents', ResidentRouter);
+
+app.get('/load', LoadController.load);
 
 app.listen(PORT);

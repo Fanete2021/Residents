@@ -5,6 +5,8 @@ import { CityController, ResidentController } from './controllers/index.js';
 import handleValidationErrors from './utils/handleValidationErrors.js';
 import { cityValidation, residentValidation } from './validations/index.js'; 
 
+console.log(process.env.PORT)
+
 mongoose.connect('mongodb://127.0.0.1:27017/Residents')
   .then(() =>{
     console.log('db load');
@@ -27,6 +29,6 @@ app.patch('/cities/:id', cityValidation, handleValidationErrors, CityController.
 app.get('/residents', ResidentController.getAll);
 app.post('/residents', residentValidation, handleValidationErrors, ResidentController.create);
 app.delete('/residents/:id', ResidentController.remove);
-app.patch('/residents/:id', ResidentController.update);
+app.patch('/residents/:id', residentValidation, handleValidationErrors, ResidentController.update);
 
 app.listen(PORT);

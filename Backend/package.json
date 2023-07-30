@@ -5,8 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node index.js",
-    "start:dev": "nodemon index.js"
+    "start": "node ./src/index.js",
+    "start:dev": "nodemon ./src/index.js",
+    "initDB": "node ./scripts/init-bd.js"
   },
   "keywords": [],
   "author": "",

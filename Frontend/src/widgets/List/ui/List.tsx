@@ -3,7 +3,9 @@ import "./List.scss";
 import { ListItem } from 'shared/ui';
 
 export interface ItemData {
-  title?: string,
+  id: string,
+  title: string,
+  onClick?: () => void,
   tooltip?: string,
   items?: ItemData[]
 }
@@ -23,8 +25,9 @@ const createListItemsRec = (items: ItemData[], level: number): JSX.Element => {
       {items.map(item => (
         <div>
           <ListItem
-            key={item.title}
+            key={item.id}
             tooltip={item.tooltip}
+            onClick={item.onClick}
           >
             {item.title}
           </ListItem>

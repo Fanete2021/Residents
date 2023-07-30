@@ -1,7 +1,12 @@
-import { City } from "entities/City";
-import {Resident} from "entities/Resident";
+import { CitySchema } from "entities/City";
+import { ResidentSchema } from "entities/Resident";
+import {ResidentFormSchema} from "features/EditorResident";
+import {CityFormSchema} from "features/EditorCity";
+
 
 export interface StateSchema {
-  cities: City[];
-  residents: Resident[];
+  cities: CitySchema;
+  residents: ResidentSchema;
+  residentForm: ResidentFormSchema;
+  cityForm: CityFormSchema
 }

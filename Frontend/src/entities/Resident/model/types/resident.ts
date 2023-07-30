@@ -1,11 +1,20 @@
-interface Group {
+import {City} from "entities/City";
+
+export interface Group {
+  _id?: string,
   type: string,
   name: string
 }
 
 export interface Resident {
-  id: number,
+  _id: string,
   name: string,
-  city_id: number,
+  city: City,
   groups: Group[]
+}
+
+export interface ResidentSchema {
+  data: Resident[],
+  isLoading: boolean,
+  error: string
 }

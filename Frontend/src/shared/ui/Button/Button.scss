@@ -1,0 +1,22 @@
+.button {
+  cursor: pointer;
+  color: white;
+  padding: 6px 15px;
+}
+
+.clear {
+  padding: 0;
+  border: none;
+  background: none;
+  outline: none;
+}
+
+.outline {
+  border: 1px solid white;
+  color: white;
+  background: none;
+}
+
+.disabled {
+  opacity: 0.5;
+}

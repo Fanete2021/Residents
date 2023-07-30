@@ -1,64 +1,56 @@
-import React from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import './MainPage.scss';
-import {City, getCities} from "entities/City";
-import {useSelector} from 'react-redux';
+import {getCities} from "entities/City";
+import {useDispatch, useSelector} from 'react-redux';
 import {getResidents} from "entities/Resident";
 import {ItemData, List} from 'widgets/List';
+import {Editor} from "widgets/Editor";
+import {residentFormActions} from "features/EditorResident";
+import {cityFormActions} from "features/EditorCity";
+import {createOrder} from "shared/lib/list/createOrder";
 
 const MainPage = () => {
   const cities = useSelector(getCities);
   const residents = useSelector(getResidents);
+  const dispatch = useDispatch();
+  const [items, setItems] = useState<ItemData[]>([]);
 
-  const items: ItemData[] = [];
+  const selectResident = useCallback((id: string) => {
+    const resident = residents.find((res) => res._id === id);
 
-  for (const resident of residents) {
-    const { groups } = resident;
-
-    let currentItem: ItemData = {};
-    let foundIndex = items.findIndex(item => item.title === groups[0].name);
-
-    if (foundIndex === -1) {
-      currentItem = { title: groups[0].name, items: []};
-      items.push(currentItem);
-    } else {
-      currentItem = items[foundIndex];
-    }
-
-    for (let i = 0; i < groups.length - 1; ++i) {
-      foundIndex = foundIndex !== -1
-        ? currentItem.items.findIndex(item => item.title === groups[i + 1].name)
-        : -1;
-
-      if (foundIndex === -1) {
-        const newItem: ItemData = {
-          title: groups[i + 1].name,
-          items: []
-        };
-        currentItem.items.push(newItem);
-
-        currentItem = currentItem.items[currentItem.items.length - 1];
-      } else {
-        currentItem = currentItem.items[foundIndex];
-      }
+    return () => {
+      dispatch(residentFormActions.setResident(resident));
     };
+  }, [residents, dispatch]);
 
-    const cityResident: City = cities.find(city => city.id === resident.city_id);
+  const selectCity = useCallback((name: string) => {
+    const city = cities.find((city) => name.toLowerCase().startsWith(city.name.toLowerCase()));
 
-    const residentItem = {
-      title: resident.name,
-      tooltip: `${cityResident.name}, ${cityResident.data} жителей`
+    return () => {
+      dispatch(cityFormActions.setCity(city));
     };
+  }, [cities, dispatch]);
 
-    currentItem.items.push(residentItem);
-  };
+  useEffect(() => {
+    const newItems = createOrder({cities, residents, selectCity, selectResident});
+
+    setItems(newItems);
+  }, [cities, residents]);
 
   return (
     <div className={'main-page'}>
       <h1 className={'main-page__title'}>Население</h1>
 
-      <List
-        items={items}
-      />
+      <div className={'main-page__content'}>
+        <List
+          className={'content__list'}
+          items={items}
+        />
+
+        <Editor
+          className={'content__editor'}
+        />
+      </div>
     </div>
   );
 };

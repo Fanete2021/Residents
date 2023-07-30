@@ -7,7 +7,9 @@ const checkCityAndGroup = async (cityId, groups) => {
     return `Переданного cityId = ${cityId} не существует в городах`;
   }
 
-  const group = groups.find(group => group.name.toLowerCase() === city.name.toLowerCase());
+  const group = groups.find(group => {
+    return group.name.toLowerCase().startsWith(city.name.toLowerCase());
+  });
   if (!group) {
     return `Город, переданный с city_id не совпадает с городом в группе`;
   }
@@ -30,7 +32,13 @@ export const create = async (req, res) => {
       groups: groups
     });
 
-    const resident = await doc.save();
+    await doc.save();
+
+    const resident = await ResidentModel.findOne({
+      _id: doc._id
+    })
+      .populate('city_id')
+      .exec();
 
     res.json(resident);
   } catch(err) {
@@ -44,7 +52,9 @@ export const create = async (req, res) => {
 
 export const getAll = async (req, res) => {
   try {
-    const residents = await ResidentModel.find().populate('city_id').exec();
+    const residents = await ResidentModel.find()
+    .populate('city_id')
+    .exec();
 
     res.json(residents);
   } catch(err) {

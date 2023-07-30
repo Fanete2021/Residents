@@ -30,4 +30,13 @@ const ResidentSchema = new mongoose.Schema({
   versionKey: false
 });
 
+ResidentSchema.set('toJSON', {
+  transform: function(doc, ret, options) {   
+      if (!mongoose.Types.ObjectId.isValid(ret.city_id)) {
+          ret.city = ret.city_id;
+          delete ret.city_id;
+      }
+  }
+});
+
 export default mongoose.model('Resident', ResidentSchema);

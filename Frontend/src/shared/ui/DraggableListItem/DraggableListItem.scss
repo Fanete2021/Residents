@@ -1,0 +1,23 @@
+.li-item {
+  cursor: pointer;
+  min-height: 5px;
+  display: flex;
+  align-items: center;
+  font-size: var(--font-m);
+
+  &:hover {
+    color: var(--list-item-hover-color);
+  }
+}
+
+.li-item__delete {
+  background: transparent;
+  border: none;
+  color: red;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+}

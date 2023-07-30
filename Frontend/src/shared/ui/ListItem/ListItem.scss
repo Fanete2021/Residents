@@ -1,24 +1,38 @@
 .list-item {
+  &:hover {
+    color: var(--list-item-hover-color);
+  }
+}
+
+.tooltip {
   border-bottom: 1px dotted #0077AA;
-  cursor: help;
+  cursor: help !important;
+
+  &:hover {
+    border-bottom-color: var(--list-item-hover-color);
+  }
+
+  &::after {
+    border: 1px solid white;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 8px 8px 8px 0px;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+    color: #FFF;
+    content: attr(data-tooltip);
+    margin-top: -24px;
+    opacity: 0;
+    padding: 3px 7px;
+    position: absolute;
+    visibility: hidden;
+    transition: all 0.4s ease-in-out;
+  }
+
+  &:hover::after {
+    opacity: 1;
+    visibility: visible;
+  }
 }
 
-.list-item::after {
-  background: rgba(0, 0, 0, 0.8);
-  border-radius: 8px 8px 8px 0px;
-  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
-  color: #FFF;
-  content: attr(data-tooltip); /* Главная часть кода, определяющая содержимое всплывающей подсказки */
-  margin-top: -24px;
-  opacity: 0; /* Наш элемент прозрачен... */
-  padding: 3px 7px;
-  position: absolute;
-  visibility: hidden; /* ...и скрыт. */
-
-  transition: all 0.4s ease-in-out; /* Добавить плавности по вкусу */
-}
-
-.list-item:hover::after {
-  opacity: 1; /* Показываем его */
-  visibility: visible;
+.clicked {
+  cursor: pointer;
 }

@@ -1,29 +1,41 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { City } from '../types/city';
+import {City, CitySchema, loadCities} from "entities/City";
 
-const initialState: City[] = [
-  {
-    "id": 1,
-    "name": "Москва",
-    "data": "10000000"
-  },
-  {
-    "id": 2,
-    "name": "Воронеж",
-    "data": "1000000"
-  },
-  {
-    "id": 3,
-    "name": "Санкт-Петербург",
-    "data": "3000000"
-  }
-];
+const initialState: CitySchema = {
+  data: [],
+  isLoading: false,
+  error: ''
+};
 
 export const citiesSlice = createSlice({
   name: 'cities',
   initialState,
   reducers: {
-
+    setCities: (state, action: PayloadAction<City[]>) => {
+      state.data = action.payload;
+    },
+    addCity: (state, action: PayloadAction<City>) => {
+      state.data.push(action.payload);
+    },
+    updateCity: (state, action: PayloadAction<City>) => {
+      const index = state.data.findIndex(city => city._id === action.payload._id);
+      state.data[index] = action.payload;
+    }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(loadCities.pending, (state, action) => {
+        state.error = undefined;
+        state.isLoading = true;
+      })
+      .addCase(loadCities.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.data = action.payload;
+      })
+      .addCase(loadCities.rejected, (state, action) => {
+        state.error = action.payload;
+        state.isLoading = false;
+      });
   }
 });
 

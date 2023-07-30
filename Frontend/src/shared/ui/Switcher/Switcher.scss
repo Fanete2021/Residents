@@ -1,0 +1,18 @@
+.switcher {
+  display: flex;
+  justify-content: center;
+}
+
+.switch__current-variant,
+.switch__variant {
+  margin: 0 10px;
+}
+
+.switch__current-variant {
+  color: white;
+}
+
+.switch__variant {
+  color: gray;
+  cursor: pointer;
+}

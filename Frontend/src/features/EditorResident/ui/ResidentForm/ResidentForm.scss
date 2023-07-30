@@ -1,0 +1,56 @@
+.resident-form {
+  margin: 5px;
+
+  .resident-form__title {
+    text-align: center;
+  }
+
+  .resident-form__name {
+    margin-top: 15px;
+    width: 170px;
+  }
+
+  .resident-form__wrapper-btn {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+
+    .wrapper-btn__btn {
+      margin: 0 5px;
+    }
+  }
+
+  .resident-form__error {
+    margin-top: 10px;
+  }
+}
+
+.resident-form__city {
+  margin-top: 15px;
+}
+
+.resident-form__groups {
+  margin-top: 15px;
+
+  .groups__inputs {
+    position: relative;
+
+    .inputs__title {
+      width: 214px;
+    }
+
+    .inputs__type {
+      width: 170px;
+    }
+
+    .inputs__create {
+      position: absolute;
+      right: 0;
+      top: 50%;
+    }
+  }
+
+  .groups__list {
+    margin-top: 30px;
+  }
+}

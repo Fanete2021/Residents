@@ -1,5 +1,5 @@
-import ResidentModel from '../../models/resident.js';
-import CityModel from '../../models/city.js';
+import ResidentModel from '../../models/Resident.js';
+import CityModel from '../../models/City.js';
 
 const checkCityAndGroup = async (cityId, groups) => {
   const city = await CityModel.findOne({ _id: cityId });

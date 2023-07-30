@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import fs from 'fs';
-import CityModel from '../src/models/city.js';
-import ResidentModel from '../src/models/resident.js';
+import CityModel from '../src/models/City.js';
+import ResidentModel from '../src/models/Resident.js';
 
 const importCities = async (cities) => {
   try {

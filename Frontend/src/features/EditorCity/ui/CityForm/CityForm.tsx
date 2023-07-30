@@ -1,5 +1,5 @@
 import React, {memo, useCallback, useEffect, useState} from 'react';
-import {Button, ButtonTheme, Input, Text, TextTheme} from 'shared/ui';
+import {Button, ButtonTheme, Input, Loader, Text, TextTheme} from 'shared/ui';
 import {useDispatch, useSelector} from 'react-redux';
 import {classNames} from "shared/lib/classNames/classNames";
 import './CityForm.scss';
@@ -75,25 +75,32 @@ export const CityForm = memo(({ className }: LoginFormProps) => {
         value={city.data}
       />
 
-      <div className={'city-form__wrapper-btn'}>
-        <Button
-          theme={ButtonTheme.OUTLINE}
-          onClick={onCreateCity}
-          disabled={isLoading}
-          className={'wrapper-btn__btn'}
-        >
-          Создать
-        </Button>
+      {isLoading
+        ?
+          <div className={'city-form__loader'}>
+            <Loader />
+          </div>
+        :
+          <div className={'city-form__wrapper-btn'}>
+            <Button
+              theme={ButtonTheme.OUTLINE}
+              onClick={onCreateCity}
+              disabled={isLoading}
+              className={'wrapper-btn__btn'}
+            >
+              Создать
+            </Button>
 
-        <Button
-          theme={ButtonTheme.OUTLINE}
-          onClick={onUpdateCity}
-          disabled={isDisabledUpdate}
-          className={'wrapper-btn__btn'}
-        >
-          Обновить
-        </Button>
-      </div>
+            <Button
+              theme={ButtonTheme.OUTLINE}
+              onClick={onUpdateCity}
+              disabled={isDisabledUpdate}
+              className={'wrapper-btn__btn'}
+            >
+              Обновить
+            </Button>
+          </div>
+      }
 
       {error &&
         <Text

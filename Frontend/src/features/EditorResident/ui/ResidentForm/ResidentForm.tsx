@@ -1,5 +1,5 @@
 import React, {memo, useCallback, useEffect, useState} from 'react';
-import {Button, ButtonTheme, Input, Select, Text, TextTheme} from 'shared/ui';
+import {Button, ButtonTheme, Input, Loader, Select, Text, TextTheme} from 'shared/ui';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   createResident,
@@ -169,34 +169,41 @@ export const ResidentForm = memo(({ className }: LoginFormProps) => {
         }
       </div>
 
-      <div className={'resident-form__wrapper-btn'}>
-        <Button
-          theme={ButtonTheme.OUTLINE}
-          onClick={onCreateResident}
-          disabled={isLoading}
-          className={'wrapper-btn__btn'}
-        >
-          Создать
-        </Button>
+      {isLoading 
+        ? 
+          <div className={'resident-form__loader'}>
+            <Loader />
+          </div>
+        : 
+          <div className={'resident-form__wrapper-btn'}>
+            <Button
+              theme={ButtonTheme.OUTLINE}
+              onClick={onCreateResident}
+              disabled={isLoading}
+              className={'wrapper-btn__btn'}
+            >
+              Создать
+            </Button>
 
-        <Button
-          theme={ButtonTheme.OUTLINE}
-          onClick={onUpdateResident}
-          disabled={isLoading || !Boolean(resident._id)}
-          className={'wrapper-btn__btn'}
-        >
-          Обновить
-        </Button>
+            <Button
+              theme={ButtonTheme.OUTLINE}
+              onClick={onUpdateResident}
+              disabled={isLoading || !Boolean(resident._id)}
+              className={'wrapper-btn__btn'}
+            >
+              Обновить
+            </Button>
 
-        <Button
-          theme={ButtonTheme.OUTLINE}
-          onClick={onDeleteResident}
-          disabled={isLoading || !Boolean(resident._id)}
-          className={'wrapper-btn__btn'}
-        >
-          Удалить
-        </Button>
-      </div>
+            <Button
+              theme={ButtonTheme.OUTLINE}
+              onClick={onDeleteResident}
+              disabled={isLoading || !Boolean(resident._id)}
+              className={'wrapper-btn__btn'}
+            >
+              Удалить
+            </Button>
+          </div>
+      }
 
       {error &&
         <Text

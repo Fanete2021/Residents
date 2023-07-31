@@ -2,20 +2,22 @@ import { FC } from 'react';
 import "./ListItem.scss";
 import {classNames} from "shared/lib/classNames/classNames";
 
-export enum ListItemType {
-
-}
-
 interface ListItemProps {
+  id: string,
   tooltip?: string;
   onClick?: () => void;
+  className?: string;
+  changeSelectItem?: (id: string) => void;
 }
 
 export const ListItem: FC<ListItemProps> = (props) => {
   const {
+    id,
+    className,
     tooltip,
     onClick,
     children,
+    changeSelectItem
   } = props;
 
   const mods: Record<string, boolean> = {
@@ -23,11 +25,18 @@ export const ListItem: FC<ListItemProps> = (props) => {
     clicked: Boolean(onClick)
   };
 
+  const handleClick = () => {
+    if (onClick) {
+      onClick();
+      changeSelectItem(id);
+    }
+  }
+
   return (
     <span
-      className={classNames('list-item', mods, [])}
+      className={classNames('list-item', mods, [ className ])}
       data-tooltip={tooltip}
-      onClick={onClick}
+      onClick={handleClick}
     >
       {children}
     </span>
